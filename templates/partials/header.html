@@ -1,0 +1,84 @@
+<!-- Navbar -->
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+        </li>
+    </ul>   
+
+    <!-- SEARCH FORM -->
+    <form class="form-inline ml-3">
+        <div class="input-group input-group-sm">
+          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-navbar" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="data-toggle-fullscreen" onclick="openFullscreen()">
+                <i class="fas fa-expand"></i></a>
+        </li>
+    </ul>
+
+    {% if session.user[3] == 1 %}
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="https://autonet.qcorpaa.aa.com/terminal/#/client/NQBjAG15c3Fs" target="_blank">
+                <i class="fas fa-terminal"></i></a>
+        </a>
+        </li>
+    </ul>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/static/Autonet-RDP.rdp" target="_blank">    
+                <i class="fas fa-desktop"></i></a>
+        </a>
+        </li>
+    </ul>
+    {% endif %}    
+      
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link">
+                {% if session.user[3] == 1 %}
+                <i class="nav-icon fas fa-user-cog"></i><span style="padding-right: 10px; font-weight: bold;"> Admin</span>
+                {% else %}
+                <i class="nav-icon far fa-user"></i><span style="padding-right: 10px; font-weight: bold;"> User</span>
+                {% endif %}
+                <span style="padding-right: 10px;">: {{session.user[1]}} </span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout">
+                <i class="nav-icon fas fa-power-off"></i>
+            </a>
+        </li>
+        <!--
+        <li class="nav-item">
+            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+              <i class="fas fa-th-large"></i>
+            </a>
+          </li>
+        -->
+    </ul>
+</nav>
+<!-- /.navbar -->
+<script>
+    let bodyElem = document.getElementsByTagName("body")[0];
+    function openFullscreen() {
+        if (bodyElem.requestFullscreen) {
+            bodyElem.requestFullscreen();
+        } else if (bodyElem.webkitRequestFullscreen) { /* Safari */
+            bodyElem.webkitRequestFullscreen();
+        } else if (bodyElem.msRequestFullscreen) { /* IE11 */
+            bodyElem.msRequestFullscreen();
+        }
+    }
+</script>

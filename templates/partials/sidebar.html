@@ -1,0 +1,286 @@
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item">
+                    <a href="/" class="nav-link {% if sidebar.menu == 'dashboard' %} active {% endif %}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>    
+                <li class="nav-item">
+                    <a href="/mpls" class="nav-link {% if sidebar.menu == 'mpls' %} active {% endif %}">
+                        <i class="nav-icon fas fa-globe"></i>
+                        <p>MPLS</p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview {% if sidebar.menu == 'far' %} menu-open {% endif %}">
+                    <a href="#" class="nav-link {% if sidebar.menu == 'far' %} active {% endif %}">
+                        <i class="nav-icon fas fa-building"></i>
+                        <p>Datacenters<i class="right fas fa-angle-left"></i></p>
+                    </a>                  
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/pdc" class="nav-link {% if sidebar.submenu == 'feb' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>PDC</p>
+                            </a>
+                        </li>  
+                        <li class="nav-item">
+                            <a href="/cdc" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>CDC</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/scc" class="nav-link {% if sidebar.submenu == 'jan' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>SCC</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/phx" class="nav-link {% if sidebar.submenu == 'mar' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>PHX</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/dfw" class="nav-link {% if sidebar.submenu == 'apr' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>DFW</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/ash" class="nav-link {% if sidebar.submenu == 'may' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>ASH</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/sjc" class="nav-link {% if sidebar.submenu == 'jun' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>SJC</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/pdt" class="nav-link {% if sidebar.submenu == 'jul' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>PDT</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/psa" class="nav-link {% if sidebar.submenu == 'aug' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>PSA</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/sv7" class="nav-link {% if sidebar.submenu == 'sep' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>SV7</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview {% if sidebar.menu == 'far' %} menu-open {% endif %}">
+                    <a href="#" class="nav-link {% if sidebar.menu == 'far' %} active {% endif %}">
+                        <i class="nav-icon fas fa-plane"></i>
+                        <p>Remote<i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Sites</p>
+                            </a>
+                        </li>                        
+                    </ul>                    
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Domestic</p>
+                            </a>
+                        </li>                        
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>International</p>
+                            </a>
+                        </li>                        
+                    </ul>                    
+                </li> 
+                <li class="nav-item has-treeview {% if sidebar.menu == 'far' %} menu-open {% endif %}">
+                    <a href="#" class="nav-link {% if sidebar.menu == 'far' %} active {% endif %}">
+                        <i class="nav-icon fas fa-cloud"></i>
+                        <p>Database<i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Inventory</p>
+                            </a>
+                        </li>                        
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Oracle</p>
+                            </a>
+                        </li>                        
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>IBM</p>
+                            </a>
+                        </li>                        
+                    </ul>                                        
+                </li> 
+                <li class="nav-item has-treeview {% if sidebar.menu == 'far' %} menu-open {% endif %}">
+                    <a href="#" class="nav-link {% if sidebar.menu == 'far' %} active {% endif %}">
+                        <i class="nav-icon fas fa-code"></i>
+                        <p>Automation<i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>SV7 DCNM</p>
+                            </a>
+                        </li>                        
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Velo</p>
+                            </a>
+                        </li>                        
+                    </ul> 
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Security</p>
+                            </a>
+                        </li>                        
+                    </ul>                                                          
+                </li>                
+                <li class="nav-item has-treeview {% if sidebar.menu == 'far' %} menu-open {% endif %}">
+                    <a href="#" class="nav-link {% if sidebar.menu == 'far' %} active {% endif %}">
+                        <i class="nav-icon fas fa-tools"></i>
+                        <p>Tools<i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/nettools" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Network</p>
+                            </a>
+                        </li>                        
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/security" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Security</p>
+                            </a>
+                        </li>                        
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>loadbalancing</p>
+                            </a>
+                        </li>                        
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Monitoring</p>
+                            </a>
+                        </li>                        
+                    </ul>                                                            
+                </li>
+                <li class="nav-item has-treeview {% if sidebar.menu == 'far' %} menu-open {% endif %}">
+                    <a href="#" class="nav-link {% if sidebar.menu == 'far' %} active {% endif %}">
+                        <i class="nav-icon fas fa-anchor"></i>
+                        <p>Useful Links<i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Azure</p>
+                            </a>
+                        </li>                        
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Oracle</p>
+                            </a>
+                        </li>                        
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/far" class="nav-link {% if sidebar.submenu == 'far' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>IBM</p>
+                            </a>
+                        </li>                        
+                    </ul>                                        
+                </li>                                                     
+                {% if session.user[3] == 1 %}               
+                <li class="nav-item has-treeview {% if sidebar.menu == 'settings' %} menu-open {% endif %}">
+                    <a href="#" class="nav-link {% if sidebar.menu == 'settings' %} active {% endif %}">
+                        <i class="nav-icon fas fa-user-cog"></i>
+                        <p>Settings<i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/user-manage" class="nav-link {% if sidebar.submenu == 'user-manage' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Users</p>
+                            </a>
+                        </li>                        
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin" class="nav-link {% if sidebar.submenu == 'admin' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Database</p>
+                            </a>
+                        </li>                        
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/netmikoconfig" class="nav-link {% if sidebar.submenu == 'configuration' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon" style="color: #339af0;"></i>
+                                <p>Configuration</p>
+                            </a>
+                        </li>                        
+                    </ul>  
+                    {% endif %}                                      
+                </li> 
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

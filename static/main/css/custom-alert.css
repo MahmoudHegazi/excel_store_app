@@ -1,0 +1,80 @@
+/* alert style */
+.custom-alert {
+    position: fixed;
+    z-index: 999999;
+    bottom: calc(10vh);
+    max-width: calc(70vw);
+    min-width: calc(20vw);
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    -o-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+}
+
+/*input.form-control {*/
+/*    width: 100%;*/
+/*}*/
+
+/*input.form-control:focus {*/
+/*    width: 100%;*/
+/*}*/
+
+#far-table {
+    text-align: center;
+    font-size: 10px;
+}
+
+input[type=text] {
+    border: 1px solid #ced4da;
+}
+
+table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_desc:after {
+    opacity: 1;
+    display: none;
+}
+
+table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
+    right: 0.5em;
+    content: "\2193";
+    display: none;
+}
+
+#far-table th {
+    padding: 5px;
+}
+
+#far-table td {
+    padding: 5px;
+}
+
+.custom-table-search {
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 5px;
+}
+
+.custom-table-search .form-control {
+    font-size: 12px;
+    height: 30px;
+}
+
+#far-table_wrapper .form-control {
+    height: calc(1.8125rem + 2px);
+    padding: .25rem .25rem;
+    font-size: .8rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
+#far-table_length select {
+    width: 100px;
+}
+
+textarea {
+    resize: both;
+}
+body {
+    line-height: 1;
+}

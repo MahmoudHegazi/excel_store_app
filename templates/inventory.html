@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+{% include "partials/head.html" %}
+<style>
+.show_row {display: table-row !important;}
+.hide_row {display: none;}
+.arrow_style {font-size:1.1rem;float: right;}
+.hidden_arrow_style {display:none;}
+.fitcontent {height: fit-content;}
+.floatright {font-size:1.2rem;float: right;}
+.hidden_eye {display: none;}
+</style>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        {% include "partials/header.html" %}
+        {% include "partials/sidebar.html" %}
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
+                            <div class="card card-danger" style="height:90%;">
+                                <div class="card-header">
+                                    <h3 class="card-title">Delete Handler</h3>
+                                    <i data-toggle="collapse" data-target="#toggle1" class="fa fa-chevron-up arrow_style uparrow hidden_arrow_style" data-index="0"></i>
+                                    <i data-toggle="collapse" data-target="#toggle1" class="fa fa-chevron-down arrow_style downarrow" data-index="0"></i>
+                                </div>
+                                <div class="card-body" id="toggle1" class="collapse">
+                                  {% with errors = get_flashed_messages(category_filter=["delete"]) %}
+                                    {% if errors %}
+                                      <div class="alert alert-{{errors[0]}} alert-dismissible fade show">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <span> {{errors[1]}}</span>
+                                      </div>
+                                    {% endif %}
+                                  {% endwith %}
+                                  <div>
+                                    <!-- start Delete-->
+                                    {% if allfiles %}
+                                    <!-- delete file section -->
+                                    <!-- Delete File must be form -->
+
+                                  <form method="post" action="{{url_for('delete_excelfile')}}">
+                                    <label class="mr-sm-2 my-3">Excel Files</label>
+                                    <div class="form-row align-items-center">
+                                         <div class="col-auto my-1 col-8">
+                                           <select class="form-control" name="deleted_file" id="delete_file_select" required="required">
+                                             <option value="none" disabled>Select a table</option>
+                                             {% for excelfile in allfiles %}
+                                               <option value="{{excelfile.id}}" title="System Path: {{excelfile.path}}">{{excelfile.name}}</option>
+                                             {% endfor %}
+                                           </select>
+                                         </div>
+                                        <div class="col-auto my-1 col-4">
+                                           <button style="width:100%;" type="submit" class="btn btn-danger" id="delete_file_btn" title="Tip: Delete a file Will delete all the sheets too">Delete</button>
+                                        </div>
+                                    </div>
+                                  </form>
+
+
+
+                                    <!-- delete Sheet section -->
+                                      <form method="post" action="{{url_for('delete_worksheet')}}">
+                                      <label class="mr-sm-2 my-3">Excel Worksheets</label>
+                                      <div class="form-row align-items-center">
+                                           <div class="col-auto my-1 col-8">
+                                             <select class="form-control" name="worksheet_delete" id="delete_worksheet_select" required="required">
+                                               <option value="none">Select a worksheet</option>
+                                               {% if allsheets %}
+                                                 {% for worksheet in allsheets %}
+                                                   <option value="{{ worksheet.id }}" title="System Path: {{ worksheet.path }}">{{ worksheet.name }} ({{ worksheet.filename }})</option>
+                                                 {% endfor %}
+                                               {% endif %}
+                                             </select>
+                                           </div>
+                                          <div class="col-auto my-1 col-4">
+                                             <button style="width:100%;" class="btn btn-danger" type="submit" id="delete_worksheet_btn" title="delete a single worksheet">Delete</button>
+                                          </div>
+                                      </div>
+                                    </form>
+
+
+                                    <!-- end not empty part -->
+                                    {% else %}
+
+                                      <label class="mr-sm-2">Excel Files</label>
+                                      <div class="form-row align-items-center">
+                                         <div class="col-auto my-1 col-8">
+                                           <select class="form-control" id="delete_file_select">
+                                             <option value="none">Select a table</option>
+                                           </select>
+                                         </div>
+                                      </div>
+                                      <div class="alert alert-secondary">
+                                        <span>There are no Excel files to delete.</span>
+                                      </div>
+
+
+                                    {% endif %}
+                                    <!-- end -->
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card card-success" style="height:90%;">
+                                <div class="card-header">
+                                    <h3 class="card-title">Excel File Manager</h3>
+                                    <i data-toggle="collapse" data-target="#toggle2" class="fa fa-chevron-up arrow_style hidden_arrow_style uparrow" data-index="1"></i>
+                                    <i data-toggle="collapse" data-target="#toggle2" class="fa fa-chevron-down arrow_style downarrow" data-index="1"></i>
+
+                                </div>
+                                <div class="card-body" id="toggle2" class="collapse">
+
+                                    <!-- AJAX Errors -->
+                                    <div id="ajax_error_label" style="display:none;" class="alert alert-danger alert-dismissible fade show">
+                                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                      <span id="error_message"></span>
+                                    </div>
+
+                                    {% with messages = get_flashed_messages(category_filter=["upload"]) %}
+                                      {% if messages %}
+                                        <div class="alert alert-info alert-dismissible fade show">
+                                          <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                          <strong>{{messages[0]}}: </strong><br /><br /><span> {{messages[1]}}</span>
+                                        </div>
+                                      {% endif %}
+                                    {% endwith %}
+                                    <div class="text-right mb-1">
+                                        <button class="btn btn-warning" onclick="$('#modal-upload-excel').modal('show')">Upload Excel</button>
+                                    </div>
+                                    <div class="form-group">
+                                      {% if allfiles  %}
+
+
+                                      <label class="mr-sm-2">Excel Files</label>
+                                      <div class="form-row align-items-center">
+                                         <div class="col-auto my-1 col-8">
+                                           <select class="form-control" id="file_select">
+                                             <option value="none">Select Excel File</option>
+                                             {% for excelfile in allfiles %}
+                                               <option value="{{excelfile.id}}" title="System Path: {{excelfile.path}}">{{excelfile.name}}</option>
+                                             {% endfor %}
+                                           </select>
+                                         </div>
+                                        <div class="col-auto my-1 col-4">
+                                           <button style="width:100%;" class="btn btn-success" id="select_excelfile_btn" title="select sheet and click here to show all worksheets in the next Selectbox">Select File</button>
+                                        </div>
+                                      </div>
+
+                                      <label class="mr-sm-2 my-3">WorkSheets</label>
+                                      <div class="form-row align-items-center">
+                                           <div class="col-auto my-1 col-6">
+                                             <select class="form-control" id="worksheet_select">
+                                               <option value="none">Select WorkSheet</option>
+                                             </select>
+                                           </div>
+                                          <div class="col-auto my-1 col-2">
+                                            <input type="number" class="form-control" id="the_pag_perpage" value="10000" placeholder="Page Limit" title="this input control rows per pages you can leave it default 10k">
+                                          </div>
+                                          <div class="col-auto my-1 col-4">
+                                             <button style="width:100%;" class="btn btn-primary" id="render_worksheet_btn" title="Select the worksheet to be displayed below">View file</button>
+                                          </div>
+                                      </div>
+
+                                      {% else %}
+                                        <select class="form-control" id="ajax_time">
+                                          <option value="none">Select Excel File</option>
+                                        </select>
+                                        <div class="alert alert-secondary">
+                                          <span>0 Excel Files Found Please Upload a file.</span>
+                                        </div>
+                                      {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                    <div class="row mb-2">
+
+                        <div class="col-md-11" style="margin-left:auto;margin-right:auto;">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Excel Sheet Editor</h3>
+                                    <i data-toggle="collapse" data-target="#toggle3" class="fa fa-chevron-up arrow_style hidden_arrow_style"  id="uptablearrow" data-index="2"></i>
+                                    <i data-toggle="collapse" data-target="#toggle3" class="fa fa-chevron-down arrow_style" id="downtableArrow" data-index="2"></i>
+                                </div>
+                                <!-- table --->
+
+                                <div class="card-body container-fluid" id="toggle3" class="collapse">
+
+                                <div class="container-fluid" id="font_style_container" style="display:none;">
+                                  <i id="eyeopen_id" data-toggle="collapse" data-target="#toggle4" class='fas fa-eye floatright hidden_eye' style='font-size:24px' title="hide font style"></i>
+                                  <i id="eyeclose_id" data-toggle="collapse" data-target="#toggle4" class='fas fa-eye-slash floatright' style='font-size:24px' title="show font style"></i>
+                                  <!-- font customzier -->
+                                  <div class="row mb-4" id="toggle4">
+                                    <div class="d-flex flex-wrap bg-light">
+                                           <div class="p-2 border text-center col-3">
+                                            <select class="form-control" id="fontsizeSelect">
+                                              <option value="16" label="Font Size"></option>
+                                              <option value="8">8</option>
+                                              <option value="10">10</option>
+                                              <option value="11">11</option>
+                                              <option value="12">12</option>
+                                              <option value="16">16</option>
+                                              <option value="18">18</option>
+                                              <option value="20">20</option>
+                                              <option value="24">24</option>
+                                              <option value="28">28</option>
+                                              <option value="32">32</option>
+                                            </select>
+                                            <input type="number" id="custom_size_input" placeholder="Custom Size" class="form-control">
+                                          </div>
+                                          <div class="p-2 border fitcontent col-3">
+                                           <select class="form-control" id="fontfamily_select">
+                                             <option value="Arial" selected>Font family</option>
+                                             <option value="Arial" style="font-family:Arial">Arial</option>
+                                             <option value="Arial black" style="font-family:Arial black">Arial black</option>
+                                             <option value="Helvetica" style="font-family:Helvetica">Helvetica</option>
+                                             <option value="Calibri" style="font-family:Calibri">Calibri</option>
+                                             <option value="Futura" style="font-family:Futura">Futura</option>
+                                             <option value="Garamond" style="font-family:Garamond">Garamond</option>
+                                             <option value="Times New Roman" style="font-family:'Times New Roman'">Times New Roman</option>
+                                             <option value="Cambria" style="font-family:Cambria">Cambria</option>
+                                             <option value="Verdana" style="font-family:Verdana">Verdana</option>
+                                             <option value="Rockwell" style="font-family:Rockwell">Rockwell</option>
+                                             <option value="Franklin Gothic" style="font-family:Franklin Gothic">Franklin Gothic</option>
+                                             <option value="fantasy" style="font-family:fantasy">fantasy</option>
+                                             <option value="monospace" style="font-family:monospace">monospace</option>
+                                             <option value="sans-serif" style="font-family:sans-serif">sans-serif</option>
+                                             <option value="impact" style="font-family:impact">impact</option>
+                                             <option value="lemon" style="font-family:lemon">lemon</option>
+                                           </select>
+                                           <input id="custom_family_input" placeholder="Custom CSS font" class="form-control">
+                                         </div>
+                                         <div class="p-2 border fitcontent col-3">
+                                          <select class="form-control fitcontent" id="textstyle">
+                                            <option value="normal" selected="">Font weight</option>
+                                            <option value="normal" stlye="font-weight:lighter">normal</option>
+                                            <option value="lighter" stlye="font-weight:lighter">lighter</option>
+                                            <option value="bold" stlye="font-weight:bold">bold</option>
+                                          </select>
+                                          <input type="number" placeholder="Custom weight" id="custom_weight_input" class="form-control">
+                                        </div>
+
+                                        <div class="p-2 border mr-3 fitcontent">
+                                          <input type="color" id="fontcolor_input">
+                                        </div>
+
+
+                                        </div>
+                                        <div>
+                                          <button class="btn btn-info" id="submit_style_btn">Apply Style</button>
+                                        </div>
+                                    </div>
+
+                                  </div>
+
+
+                                                <h4 class="m-3" id="sheet_id_title"></h4>
+                                                <div class="card" id="table_card_container">
+                                                </div>
+                                            </div>
+                                <!-- table end -->
+                                <!-- /.card-header -->
+                                <!-- form start -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+        </div>
+
+        <!-- /.modal -->
+
+
+        <!-- The Modal -->
+        <div class="modal fade" id="title_order_model">
+          <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">Column Name</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+
+              <!-- Modal body -->
+              <div class="modal-body">
+                <label for="orderby_titles">ORDER BY</label>
+                <select id="orderby_titles" class="form-control">
+                  <option>ASC</option>
+                  <option>DESC</option>
+                </select>
+              </div>
+
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="submit_order_titles" type="button" class="btn btn-success">Submit</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <!-- toolbar Model for cells and rows action -->
+
+        <div class="modal fade" id="toolbar_model">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="model_column_title">Title</h4>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                        <div class="modal-body">
+                          <div class="container-fluid text-right mb-3">
+                            <button id="add_to_filter_btn" type="button" class="btn btn-primary">
+                              Add TO (OR) Filter
+                            </button>
+                            <button id="add_to_and_filter_btn" type="button" class="btn btn-success">
+                              Add TO (AND) Filter
+                            </button>
+                          </div>
+                          <div class="text-center" id="row_dimension"></div>
+
+                            <!-- Update cell part -->
+                            <label class="mr-sm-2">Edit Cell Value</label>
+                            <div class="form-row align-items-center">
+                               <div class="col-auto my-1 col-8">
+                                 <input type="text" id="py_editcell" value="" class="form-control">
+                               </div>
+                              <div class="col-auto my-1 col-3">
+                                <button style="width:100%;" type="button" class="btn btn-success" id="toolbar_submit_btn" data-dismiss="modal">Submit</button>
+                              </div>
+                            </div>
+
+                            <!-- Update cell part -->
+                            <label class="mr-sm-5 my-2">Insert Rows</label>
+                            <div class="form-row align-items-center">
+
+
+                               <div class="col-auto my-1 col-4">
+                                 <button style="width:100%;" type="button" class="btn btn-info disabled" id="insert_row_before">Insert Before</button>
+                               </div>
+                              <div class="col-auto my-1 col-4">
+                                <button style="width:100%;" type="button" class="btn btn-info disabled" id="insert_row_after">Insert After</button>
+                              </div>
+                              <div class="col-auto my-1 col-4">
+                                <button style="width:100%;" type="button" class="btn btn-info disabled" id="insert_row_into">Insert</button>
+                              </div>
+
+                              <div class="col-auto my-1 col-2" style="margin-left:auto;">
+                                <button style="width:100%;" type="button" class="btn btn-secondary" id="toggler_button" title="Click to show insert inputs"><i id="toggler_i" class="fa fa-eye" aria-hidden="true"></i></button>
+                              </div>
+                            </div>
+
+                            <div class="container mt-3" id="row_data_container" style="display:none;">
+                              <p class="label label-alert">New Row Data</p>
+                              <div class="d-flex flex-wrap bg-light" id="input_data_container">
+                              </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" id="delete_selected_row" data-dismiss="modal">Delete Full Row</button>
+                        </div>
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+        <!-- /.modal -->
+
+        <div class="modal fade" id="modal-upload-excel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Upload Excel Sheet</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method=post enctype="multipart/form-data" action="{{url_for('upload_file')}}">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Select a excel file</label>
+                                <input type="file" class="form-control" id="modal_upload_pci" name="file" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Submit upload</button>
+                        </div>
+                    </form>
+                </div>
+
+
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+        {% include "partials/footer.html" %}
+    </div>
+    <!-- ./wrapper -->
+    {% include "partials/foot.html" %}
+    <!-- inventory js code 8/26/2021 lastupdate -->
+
+    <script src="{{url_for('static', filename='main/js/inv.js')}}"></script>
+
+</body>
+
+</html>
