@@ -6,7 +6,7 @@ Flask/JavaScript app that used to put all your excelshet into one application wi
 ![excel2](https://i.ibb.co/1zYPQ0V/sheet1.jpg)
 ![excel3](https://i.ibb.co/R4DZqzG/sheet3.jpg)
 
-### review:
+### Reviews:
 ![review](https://i.ibb.co/pLqdvst/review.jpg)
 
 
